@@ -23,8 +23,11 @@ for match in data:
     for part in match[1:]:
         if int(part[0]) > game[part[1]]:
             game[part[1]] = int(part[0])
+    #sum the game number of each game that was possible
     if game['red'] <= 12 and game['green'] <= 13 and game['blue'] <= 14:
         total += int(match[0])
+    #sum the power of each game
     total2 += game['red'] * game['green'] * game['blue']
+
 print(f'part 1: {total}')
 print(f'part 2: {total2}')
