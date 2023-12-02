@@ -18,7 +18,6 @@ for i in data:
     for j, x in enumerate(nums):
         temp2 = temp2.replace(x, numss[j])
     for j in temp2:
-        if j in '123456789':
-            temp += j
+        if j in '123456789': temp += j
     total += int(temp[0]+temp[-1])
 print(total)
