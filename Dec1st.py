@@ -20,4 +20,4 @@ for i in data:
     for j in temp2:
         if j in '123456789': temp += j
     total += int(temp[0]+temp[-1])
-print(total)
+print(total+1)
