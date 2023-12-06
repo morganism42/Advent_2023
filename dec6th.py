@@ -1,8 +1,10 @@
 from numpy import prod
-
+from time import perf_counter
+start = perf_counter()
 # get 2 lists for time and distancs
 with open('dec6.txt') as f:
 	data = f.readlines()
+	data = [i.replace('  ','')for i in data]
 	time = [int(i) for i in data[0].split('  ')]
 	distance = [int(i) for i in data[1].split('  ')]
 
@@ -13,4 +15,5 @@ for i in range(len(time)):  # iterate over each race
 		if j * (time[i] - j) > distance[i]:
 			wins.append([j, time[i] - j])
 			break  # math
-print(prod([(i[1] - i[0] + 1) for i in wins]))
+print(f'answer:{prod([(i[1] - i[0] + 1) for i in wins])}')
+print(f'took {perf_counter()-start}) seconds')
