@@ -11,11 +11,6 @@ for i in range(len(time)):  # iterate over each race
 	temp = []
 	for j in range(time[i]):  # find the smallest time to press and win
 		if j * (time[i] - j) > distance[i]:
-			temp.append(j)
-			break
-	for j in range(time[i], 0, -1):  # find the largest time to press and win
-		if j * (time[i] - j) > distance[i]:
-			temp.append(j)
-			break
-	wins.append(temp[1] - temp[0] + 1)  # math
-print(prod(wins))
+			wins.append([j, time[i] - j])
+			break  # math
+print(prod([(i[1] - i[0] + 1) for i in wins]))
