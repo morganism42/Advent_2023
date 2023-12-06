@@ -1,3 +1,5 @@
+from time import perf_counter as watch
+start = watch()
 with open('dec5.txt') as f:
 	data = f.read()
 	data = data.split('\n\n')
@@ -43,3 +45,4 @@ for intructs in map:
 			packstemp.append(pack)
 	seedpacks = packstemp
 print(min([i[0] for i in seedpacks]))
+print(f'completed in {watch()-start} seconds')
