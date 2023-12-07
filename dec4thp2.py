@@ -7,12 +7,9 @@ for n, i in enumerate(data):
 	data[n].append(1)  # adds a card count to the end of each card
 
 for n, i in enumerate(data):
-	score = 0
 	a = len(set(i[0]) & set(i[1]))
 	if a > 0:
-		score += a
-	if score > 0:
-		for j in range(score):
+		for j in range(a):
 			if n + j + 1 >= len(data):
 				break
 			data[n + j + 1][-1] += data[n][-1]

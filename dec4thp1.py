@@ -1,4 +1,3 @@
-
 with open('dec4.txt') as f:
 	data = f.read().splitlines()
 data = [i[i.find(':') + 2:].replace('  ', ' ').split(' | ') for i in data]  # formats cards
@@ -11,4 +10,5 @@ for i in data:
 	a = len(set(i[0]) & set(i[1]))
 	if a > 0:
 		winnings += 2 ** (a - 1)  # sums the winnings of each card
+
 print(winnings)
