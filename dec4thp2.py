@@ -1,3 +1,12 @@
+def timing(self):
+	import time
+	start_time = time.time()
+	self.implement()
+	end_time = time.time()
+	print(f'Time taken: {end_time - start_time} seconds')
+
+
+timing()
 with open('dec4.txt') as f:
 	data = f.read().splitlines()
 data = [i[i.find(':') + 2:].replace('  ', ' ').split(' | ') for i in data]
