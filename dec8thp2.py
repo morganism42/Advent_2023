@@ -45,3 +45,4 @@ for x, location in enumerate(locations): # for each start location
 
 
 print(np.lcm.reduce(paths, dtype='int64')) #due to the length from start to Z being the same as the length from Z to Z LCM just works
+
