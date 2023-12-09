@@ -1,4 +1,4 @@
-file = open('dec1.txt','r')
+file = open('dec1.txt', 'r')
 data = file.read()
 file.close()
 data = data.split('\n')

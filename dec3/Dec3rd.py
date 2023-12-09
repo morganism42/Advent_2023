@@ -1,4 +1,4 @@
-file = open('sample.txt', 'r')
+file = open('../sample.txt', 'r')
 data = file.read()
 file.close()
 temp = data.split('\n')
