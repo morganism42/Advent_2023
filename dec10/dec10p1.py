@@ -2,14 +2,14 @@ with open('dec10.txt') as f:
 	map = f.read().split('\n')
 
 
-def findStart(lines):
+def findStart(lines):  # finds the starting position
 	for i in range(len(lines)):
 		for j in range(len(lines[i])):
 			if lines[i][j] == 'S':
 				return i, j
 
 
-def firstep(y, x):
+def firstep(y, x):  # finds the first step in both directions
 	pos = []
 	if map[y][x + 1] in '-J7':
 		pos.append([[y, x], [y, x + 1]])
@@ -29,7 +29,8 @@ steps = 1
 loop = True
 while loop:
 	steps += 1
-	for n, i in enumerate(positions.copy()):
+	for n, i in enumerate(
+			positions.copy()):  # in both directions look at the next steps pipe and determine the step after that
 		if map[i[1][0]][i[1][1]] == '|':
 			if i[0][0] > i[1][0]:
 				positions[n] = [[i[1][0], i[1][1]], [i[1][0] - 1, i[1][1]]]

@@ -2,14 +2,14 @@ with open('dec10.txt') as f:
 	map = f.read().split('\n')
 
 
-def findStart(lines):
+def findStart(lines):  # finds the starting position
 	for i in range(len(lines)):
 		for j in range(len(lines[i])):
 			if lines[i][j] == 'S':
 				return i, j
 
 
-def firstep(y, x):
+def firstep(y, x):  # finds the first step in both directions
 	pos = []
 	if map[y][x + 1] in '-J7':
 		pos.append([[y, x], [y, x + 1]])
@@ -30,7 +30,8 @@ loop = True
 path = positions[0].copy()
 while loop:
 	steps += 1
-	for n, i in enumerate(positions.copy()):
+	for n, i in enumerate(
+			positions.copy()):  # in both directions look at the next steps pipe and determine the step after that
 		if map[i[1][0]][i[1][1]] == '|':
 			if i[0][0] > i[1][0]:
 				positions[n] = [[i[1][0], i[1][1]], [i[1][0] - 1, i[1][1]]]
@@ -61,12 +62,12 @@ while loop:
 				positions[n] = [[i[1][0], i[1][1]], [i[1][0] - 1, i[1][1]]]
 			elif i[0][0] < i[1][0]:
 				positions[n] = [[i[1][0], i[1][1]], [i[1][0], i[1][1] - 1]]
-	path.append(positions[0][1])
+	path.append(positions[0][1])  # add the next step to the path
 	if positions[0][1] == start:
 		loop = False
 
 
-def mapout(y, x, path, mapped, area=0):
+def mapout(y, x, path, mapped, area=0):  # floodfills an area bound by the path
 	area += 1
 	if [y + 1, x] not in path and [y + 1, x] not in mapped:
 		mapped.append([y + 1, x])
@@ -83,7 +84,7 @@ def mapout(y, x, path, mapped, area=0):
 	return mapped, area
 
 
-def findside(path):
+def findside(path):  # finds a | on the edge of the map and returns what side is inside the path
 	for i in path:
 		if i[1] + 1 == len(map[0]) and map[i[0]][i[1]] == '|':
 			return True, i
@@ -96,15 +97,16 @@ if left:
 	direction = 'left'
 else:
 	direction = 'right'
-side = direction
-mapped = []
-total = 0
-overpath = path.copy()
-path2 = path[path.index(start):]
-path = path[:path.index(start)+1]
+side = direction  # which side is inside the path
+mapped = []  # area that is mapped out
+total = 0  # variable that ended up being unused but isn't worth removing due to being in functions
+overpath = path.copy()  # listen, I did this at 2am and I don't remember why I did this the way I did, over path is the original path
+path2 = path[path.index(start):]  # path 2 is one side of the path originating from the | on the edge of the map
+path = path[:path.index(start) + 1]  # the other side of the path
 
 for n in range(len(path) - 1, -1, -1):
 	i = path[n]
+	# for bends floodfills the side before the corner
 	if direction == 'left' and [i[0], i[1] - 1] not in overpath and [i[0], i[1] - 1] not in mapped:
 		mapped.append([i[0], i[1] - 1])
 		mapped, temp = mapout(i[0], i[1] - 1, overpath, mapped)
@@ -121,6 +123,7 @@ for n in range(len(path) - 1, -1, -1):
 		mapped.append([i[0] + 1, i[1]])
 		mapped, temp = mapout(i[0] + 1, i[1], overpath, mapped)
 		total += temp
+	# for corners determines the change of direction
 	if map[i[0]][i[1]] == 'L':
 		if path[n + 1][0] < i[0]:
 			if direction == 'right':
@@ -165,6 +168,7 @@ for n in range(len(path) - 1, -1, -1):
 				direction = 'up'
 			elif direction == 'right':
 				direction = 'down'
+	# for bends floodfills the side after the corner
 	if direction == 'left' and [i[0], i[1] - 1] not in overpath and [i[0], i[1] - 1] not in mapped:
 		mapped.append([i[0], i[1] - 1])
 		mapped, temp = mapout(i[0], i[1] - 1, overpath, mapped)
@@ -184,6 +188,9 @@ for n in range(len(path) - 1, -1, -1):
 
 path = path2
 direction = side
+
+
+#same as above but for the other side of the path
 for n, i in enumerate(path):
 	if direction == 'left' and [i[0], i[1] - 1] not in overpath and [i[0], i[1] - 1] not in mapped:
 		mapped.append([i[0], i[1] - 1])
@@ -262,6 +269,8 @@ for n, i in enumerate(path):
 		mapped, temp = mapout(i[0] + 1, i[1], overpath, mapped)
 		total += temp
 
+
+#creates a nice visual for the map
 fancymap = []
 for i in range(len(map)):
 	fancymap.append([])
