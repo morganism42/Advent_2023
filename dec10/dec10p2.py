@@ -262,4 +262,16 @@ for n, i in enumerate(path):
 		mapped, temp = mapout(i[0] + 1, i[1], overpath, mapped)
 		total += temp
 
-print(len(mapped))
+fancymap = []
+for i in range(len(map)):
+	fancymap.append([])
+	for j in range(len(map[i])):
+		if [i, j] in mapped:
+			fancymap[-1].append('O')
+		elif [i, j] in overpath:
+			fancymap[-1].append(map[i][j])
+		else:
+			fancymap[-1].append('.')
+	fancymap[-1] = ''.join(fancymap[-1])
+for i in fancymap:
+	print(i)
