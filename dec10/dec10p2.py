@@ -88,7 +88,7 @@ def findside(path):  # finds a | on the edge of the map and returns what side is
 	for i in path:
 		if i[1] + 1 == len(map[0]) and map[i[0]][i[1]] == '|':
 			return True, i
-		elif i[1] - 1 == 0 and map[i[0]][i[1]] == '|':
+		elif i[1] == 0 and map[i[0]][i[1]] == '|':
 			return False, i
 
 
