@@ -2,7 +2,7 @@ import math
 from copy import deepcopy
 from collections import defaultdict
 
-with open('../dec18/test.txt') as f:
+with open('test.txt') as f:
 	heat = [[int(i) for i in k] for k in f.read().split('\n')]
 # [distance,location,direction,steps in straight line]
 unvisited = [(0, (0, 0), (0, 0), 0)]
