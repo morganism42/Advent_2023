@@ -1,6 +1,8 @@
 from copy import deepcopy
-with open('dec19.txt') as file:
-	lines = file.read().split('\n\n')
+from aocd import get_data, submit
+
+data = get_data(day=19)
+lines = data.split('\n\n')
 flows = {}
 for i in lines[0].split('\n'):
 	flows[i[:i.index('{')]] = i[i.index('{') + 1:-1].split(',')
@@ -35,3 +37,5 @@ def test(part, flow):
 
 test(parts, 'in')
 print(total)
+submit(total, day=19, year=2023, part='b')
+
