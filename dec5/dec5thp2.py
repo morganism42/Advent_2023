@@ -10,20 +10,20 @@ seedpacks = []
 for i in range(0, len(seeds), 2):
 	seedpacks.append([seeds[i], seeds[i] + seeds[i + 1] - 1])
 # parses map into sets of instructions
-map = []
+field = []
 for i in range(1, len(data)):
-	map.append(data[i][data[i].find(':') + 2:].split('\n'))
-	for j, n in enumerate(map[i - 1]):
-		map[i - 1][j] = n.split(' ')
+	field.append(data[i][data[i].find(':') + 2:].split('\n'))
+	for j, n in enumerate(field[i - 1]):
+		field[i - 1][j] = n.split(' ')
 
 # makes map values integers
-for i in range(len(map)):
-	for j in range(len(map[i])):
-		for n in range(len(map[i][j])):
-			map[i][j][n] = int(map[i][j][n])
+for i in range(len(field)):
+	for j in range(len(field[i])):
+		for n in range(len(field[i][j])):
+			field[i][j][n] = int(field[i][j][n])
 
 # for each set of instructions run all the seed packs thorugh those instructions and replace the seedpack
-for intructs in map:
+for intructs in field:
 	packstemp = []
 	for pack in seedpacks:
 		for instruct in intructs:

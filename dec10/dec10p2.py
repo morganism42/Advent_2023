@@ -1,5 +1,5 @@
 with open('dec10.txt') as f:
-	map = f.read().split('\n')
+	field = f.read().split('\n')
 
 
 def findStart(lines):  # finds the starting position
@@ -11,18 +11,18 @@ def findStart(lines):  # finds the starting position
 
 def firstep(y, x):  # finds the first step in both directions
 	pos = []
-	if map[y][x + 1] in '-J7':
+	if field[y][x + 1] in '-J7':
 		pos.append([[y, x], [y, x + 1]])
-	elif map[y][x - 1] in '-FL':
+	elif field[y][x - 1] in '-FL':
 		pos.append([[y, x], [y, x - 1]])
-	elif map[y + 1][x] in '|JL':
+	elif field[y + 1][x] in '|JL':
 		pos.append([[y, x], [y + 1, x]])
-	elif map[y - 1][x] in '|F7':
+	elif field[y - 1][x] in '|F7':
 		pos.append([[y, x], [y - 1, x]])
 	return pos
 
 
-y, x = findStart(map)
+y, x = findStart(field)
 start = [y, x]
 positions = firstep(y, x)
 steps = 1
@@ -32,32 +32,32 @@ while loop:
 	steps += 1
 	for n, i in enumerate(
 			positions.copy()):  # in both directions look at the next steps pipe and determine the step after that
-		if map[i[1][0]][i[1][1]] == '|':
+		if field[i[1][0]][i[1][1]] == '|':
 			if i[0][0] > i[1][0]:
 				positions[n] = [[i[1][0], i[1][1]], [i[1][0] - 1, i[1][1]]]
 			elif i[0][0] < i[1][0]:
 				positions[n] = [[i[1][0], i[1][1]], [i[1][0] + 1, i[1][1]]]
-		elif map[i[1][0]][i[1][1]] == '-':
+		elif field[i[1][0]][i[1][1]] == '-':
 			if i[0][1] > i[1][1]:
 				positions[n] = [[i[1][0], i[1][1]], [i[1][0], i[1][1] - 1]]
 			elif i[0][1] < i[1][1]:
 				positions[n] = [[i[1][0], i[1][1]], [i[1][0], i[1][1] + 1]]
-		elif map[i[1][0]][i[1][1]] == 'L':
+		elif field[i[1][0]][i[1][1]] == 'L':
 			if i[0][1] > i[1][1]:
 				positions[n] = [[i[1][0], i[1][1]], [i[1][0] - 1, i[1][1]]]
 			elif i[0][0] < i[1][0]:
 				positions[n] = [[i[1][0], i[1][1]], [i[1][0], i[1][1] + 1]]
-		elif map[i[1][0]][i[1][1]] == '7':
+		elif field[i[1][0]][i[1][1]] == '7':
 			if i[0][1] < i[1][1]:
 				positions[n] = [[i[1][0], i[1][1]], [i[1][0] + 1, i[1][1]]]
 			elif i[0][0] > i[1][0]:
 				positions[n] = [[i[1][0], i[1][1]], [i[1][0], i[1][1] - 1]]
-		elif map[i[1][0]][i[1][1]] == 'F':
+		elif field[i[1][0]][i[1][1]] == 'F':
 			if i[0][1] > i[1][1]:
 				positions[n] = [[i[1][0], i[1][1]], [i[1][0] + 1, i[1][1]]]
 			elif i[0][0] > i[1][0]:
 				positions[n] = [[i[1][0], i[1][1]], [i[1][0], i[1][1] + 1]]
-		elif map[i[1][0]][i[1][1]] == 'J':
+		elif field[i[1][0]][i[1][1]] == 'J':
 			if i[0][1] < i[1][1]:
 				positions[n] = [[i[1][0], i[1][1]], [i[1][0] - 1, i[1][1]]]
 			elif i[0][0] < i[1][0]:
@@ -86,9 +86,9 @@ def mapout(y, x, path, mapped, area=0):  # floodfills an area bound by the path
 
 def findside(path):  # finds a | on the edge of the map and returns what side is inside the path
 	for i in path:
-		if i[1] + 1 == len(map[0]) and map[i[0]][i[1]] == '|':
+		if i[1] + 1 == len(field[0]) and field[i[0]][i[1]] == '|':
 			return True, i
-		elif i[1] == 0 and map[i[0]][i[1]] == '|':
+		elif i[1] == 0 and field[i[0]][i[1]] == '|':
 			return False, i
 
 
@@ -124,7 +124,7 @@ for n in range(len(path) - 1, -1, -1):
 		mapped, temp = mapout(i[0] + 1, i[1], overpath, mapped)
 		total += temp
 	# for corners determines the change of direction
-	if map[i[0]][i[1]] == 'L':
+	if field[i[0]][i[1]] == 'L':
 		if path[n + 1][0] < i[0]:
 			if direction == 'right':
 				direction = 'up'
@@ -135,7 +135,7 @@ for n in range(len(path) - 1, -1, -1):
 				direction = 'right'
 			elif direction == 'down':
 				direction = 'left'
-	elif map[i[0]][i[1]] == '7':
+	elif field[i[0]][i[1]] == '7':
 		if path[n + 1][1] < i[1]:
 			if direction == 'down':
 				direction = 'left'
@@ -146,7 +146,7 @@ for n in range(len(path) - 1, -1, -1):
 				direction = 'down'
 			elif direction == 'right':
 				direction = 'up'
-	elif map[i[0]][i[1]] == 'F':
+	elif field[i[0]][i[1]] == 'F':
 		if path[n + 1][1] > i[1]:
 			if direction == 'down':
 				direction = 'right'
@@ -157,7 +157,7 @@ for n in range(len(path) - 1, -1, -1):
 				direction = 'up'
 			elif direction == 'right':
 				direction = 'down'
-	elif map[i[0]][i[1]] == 'J':
+	elif field[i[0]][i[1]] == 'J':
 		if path[n + 1][1] < i[1]:
 			if direction == 'up':
 				direction = 'left'
@@ -208,7 +208,7 @@ for n, i in enumerate(path):
 		mapped.append([i[0] + 1, i[1]])
 		mapped, temp = mapout(i[0] + 1, i[1], overpath, mapped)
 		total += temp
-	if map[i[0]][i[1]] == 'L':
+	if field[i[0]][i[1]] == 'L':
 		if path[n - 1][0] < i[0]:
 			if direction == 'right':
 				direction = 'up'
@@ -219,7 +219,7 @@ for n, i in enumerate(path):
 				direction = 'right'
 			elif direction == 'down':
 				direction = 'left'
-	elif map[i[0]][i[1]] == '7':
+	elif field[i[0]][i[1]] == '7':
 		if path[n - 1][1] < i[1]:
 			if direction == 'down':
 				direction = 'left'
@@ -230,7 +230,7 @@ for n, i in enumerate(path):
 				direction = 'down'
 			elif direction == 'right':
 				direction = 'up'
-	elif map[i[0]][i[1]] == 'F':
+	elif field[i[0]][i[1]] == 'F':
 		if path[n - 1][1] > i[1]:
 			if direction == 'down':
 				direction = 'right'
@@ -241,7 +241,7 @@ for n, i in enumerate(path):
 				direction = 'up'
 			elif direction == 'right':
 				direction = 'down'
-	elif map[i[0]][i[1]] == 'J':
+	elif field[i[0]][i[1]] == 'J':
 		if path[n - 1][1] < i[1]:
 			if direction == 'up':
 				direction = 'left'
@@ -272,13 +272,13 @@ for n, i in enumerate(path):
 
 #creates a nice visual for the map
 fancymap = []
-for i in range(len(map)):
+for i in range(len(field)):
 	fancymap.append([])
-	for j in range(len(map[i])):
+	for j in range(len(field[i])):
 		if [i, j] in mapped:
 			fancymap[-1].append('O')
 		elif [i, j] in overpath:
-			fancymap[-1].append(map[i][j])
+			fancymap[-1].append(field[i][j])
 		else:
 			fancymap[-1].append('.')
 	fancymap[-1] = ''.join(fancymap[-1])

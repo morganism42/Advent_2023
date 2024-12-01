@@ -2,7 +2,7 @@ from aocd import get_data, submit
 from copy import deepcopy
 from math import floor
 
-data = get_data(day=21)
+data = get_data(day=21, year=2023)
 test = '''...........
 .....###.#.
 .###.##..#.

@@ -1,5 +1,5 @@
 with open('dec10.txt') as f:
-	map = f.read().split('\n')
+	field = f.read().split('\n')
 
 
 def findStart(lines):  # finds the starting position
@@ -11,19 +11,19 @@ def findStart(lines):  # finds the starting position
 
 def firstep(y, x):  # finds the first step in both directions
 	pos = []
-	if map[y][x + 1] in '-J7':
+	if field[y][x + 1] in '-J7':
 		pos.append([[y, x], [y, x + 1]])
-	if map[y][x - 1] in '-FL':
+	if field[y][x - 1] in '-FL':
 		pos.append([[y, x], [y, x - 1]])
-	if map[y + 1][x] in '|JL':
+	if field[y + 1][x] in '|JL':
 		pos.append([[y, x], [y + 1, x]])
-	if map[y - 1][x] in '|F7':
+	if field[y - 1][x] in '|F7':
 		pos.append([[y, x], [y - 1, x]])
 	print(pos)
 	return pos
 
 
-y, x = findStart(map)
+y, x = findStart(field)
 positions = firstep(y, x)
 steps = 1
 loop = True
@@ -31,32 +31,32 @@ while loop:
 	steps += 1
 	for n, i in enumerate(
 			positions.copy()):  # in both directions look at the next steps pipe and determine the step after that
-		if map[i[1][0]][i[1][1]] == '|':
+		if field[i[1][0]][i[1][1]] == '|':
 			if i[0][0] > i[1][0]:
 				positions[n] = [[i[1][0], i[1][1]], [i[1][0] - 1, i[1][1]]]
 			elif i[0][0] < i[1][0]:
 				positions[n] = [[i[1][0], i[1][1]], [i[1][0] + 1, i[1][1]]]
-		elif map[i[1][0]][i[1][1]] == '-':
+		elif field[i[1][0]][i[1][1]] == '-':
 			if i[0][1] > i[1][1]:
 				positions[n] = [[i[1][0], i[1][1]], [i[1][0], i[1][1] - 1]]
 			elif i[0][1] < i[1][1]:
 				positions[n] = [[i[1][0], i[1][1]], [i[1][0], i[1][1] + 1]]
-		elif map[i[1][0]][i[1][1]] == 'L':
+		elif field[i[1][0]][i[1][1]] == 'L':
 			if i[0][1] > i[1][1]:
 				positions[n] = [[i[1][0], i[1][1]], [i[1][0] - 1, i[1][1]]]
 			elif i[0][0] < i[1][0]:
 				positions[n] = [[i[1][0], i[1][1]], [i[1][0], i[1][1] + 1]]
-		elif map[i[1][0]][i[1][1]] == '7':
+		elif field[i[1][0]][i[1][1]] == '7':
 			if i[0][1] < i[1][1]:
 				positions[n] = [[i[1][0], i[1][1]], [i[1][0] + 1, i[1][1]]]
 			elif i[0][0] > i[1][0]:
 				positions[n] = [[i[1][0], i[1][1]], [i[1][0], i[1][1] - 1]]
-		elif map[i[1][0]][i[1][1]] == 'F':
+		elif field[i[1][0]][i[1][1]] == 'F':
 			if i[0][1] > i[1][1]:
 				positions[n] = [[i[1][0], i[1][1]], [i[1][0] + 1, i[1][1]]]
 			elif i[0][0] > i[1][0]:
 				positions[n] = [[i[1][0], i[1][1]], [i[1][0], i[1][1] + 1]]
-		elif map[i[1][0]][i[1][1]] == 'J':
+		elif field[i[1][0]][i[1][1]] == 'J':
 			if i[0][1] < i[1][1]:
 				positions[n] = [[i[1][0], i[1][1]], [i[1][0] - 1, i[1][1]]]
 			elif i[0][0] < i[1][0]:
